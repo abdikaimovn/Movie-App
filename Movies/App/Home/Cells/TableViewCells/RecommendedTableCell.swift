@@ -10,7 +10,6 @@ import Alamofire
 
 class RecommendedTableCell: UITableViewCell {
     var recommendedMovies = [HomeModel]()
-    let homePresenter = HomePresenter()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -38,8 +37,6 @@ class RecommendedTableCell: UITableViewCell {
     private func setupView(){
         selectionStyle = .none
         contentView.addSubview(collectionView)
-        homePresenter.delegate = self
-        homePresenter.fetchDataFromAPI(category: .popular)
         collectionView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(25)
             make.left.right.equalToSuperview()
@@ -61,20 +58,5 @@ extension RecommendedTableCell: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0.0, left: 35.0, bottom: 0.0, right: 35.0)
-    }
-    
-}
-
-extension RecommendedTableCell: TransferDataBetweenControllesDelegate{
-    func handleDataFromAPI(movies: [MovieResponse]) {
-        DispatchQueue.main.async {
-            for movie in movies {
-                self.recommendedMovies.append(HomeModel(id: movie.id, stringImage: movie.poster_path))
-            }
-            self.collectionView.reloadData()
-        }
-    }
-    func handleError(error: Error) {
-        print(error)
     }
 }

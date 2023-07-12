@@ -5,14 +5,9 @@ struct Category{
     var isSelected: Bool = false
 }
 
-protocol CategoriesDelegate{
-    func didChangeCategory(_ indexOfCategory: Int)
-}
-
-
 class CategoriesTableCell: UITableViewCell {
     var selectedCategoryIndex: Int = 0
-    var categoryDelegate: CategoriesDelegate?
+    var categoryDidSelect: ((Int) -> ())?
     
     private var categories = [
         Category(text: "Now Playing", isSelected: true),
@@ -76,12 +71,9 @@ extension CategoriesTableCell: UICollectionViewDelegate, UICollectionViewDataSou
         selectedCategoryIndex = indexPath.row
         collectionView.reloadItems(at: indexes)
         collectionView.scrollToItem(at: indexes[1], at: .centeredHorizontally, animated: true)
-        obtainCategoryNumber()
+        categoryDidSelect?(selectedCategoryIndex)
     }
     
-    func obtainCategoryNumber(){
-        self.categoryDelegate?.didChangeCategory(selectedCategoryIndex)
-    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionCell", for: indexPath) as! CategoriesCollectionCell
