@@ -10,7 +10,8 @@ import SnapKit
 
 class ListTableCell: UITableViewCell {
     var listTableMovies = [HomeModel]()
-    
+    var detailPresenter = DetailPresenter()
+    weak var parentViewController: HomeViewController?
     private lazy var collectionView: UICollectionView = {
         let layout  = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 144)
@@ -35,7 +36,9 @@ class ListTableCell: UITableViewCell {
     }
     
     private func setupView(){
+        self.backgroundColor = .clear
         selectionStyle = .none
+        detailPresenter.delegate = self
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(20)
@@ -44,9 +47,19 @@ class ListTableCell: UITableViewCell {
             make.height.equalTo(475)
         }
     }
+    
+    func configure(listOfMovies: [HomeModel]){
+        listTableMovies = listOfMovies
+        collectionView.reloadData()
+    }
 }
 
 extension ListTableCell: UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieId = String(listTableMovies[indexPath.row].id)
+        detailPresenter.fetchMovieByID(movieId: movieId)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return listTableMovies.count
     }
@@ -54,7 +67,20 @@ extension ListTableCell: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCollectionCell", for: indexPath) as! ListCollectionCell
         cell.configure(urlForImage: listTableMovies[indexPath.row].stringImage)
-        collectionView.reloadData()
         return cell
+    }
+}
+
+extension ListTableCell: DetailDelegate {
+    func didFetchMovie(movie: DetailModel) {
+        let detailVC = DetailViewController()
+        detailVC.configure(model: movie)
+        if let parentVC = self.parentViewController {
+            parentVC.navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    func didFail(error: Error) {
+        print(error)
     }
 }

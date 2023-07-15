@@ -39,6 +39,7 @@ class CategoriesTableCell: UITableViewCell {
     }
     
     private func setupView() {
+        self.backgroundColor = .clear
         selectionStyle = .none
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in

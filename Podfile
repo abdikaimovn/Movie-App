@@ -7,5 +7,5 @@ target 'Movies' do
 
   # Pods for Movies
 pod 'Alamofire'
-
+pod 'SkeletonView'
 end

@@ -14,4 +14,6 @@ struct APIManager{
     let linkToFetchImages = "https://image.tmdb.org/t/p/w500"
     //After movie/ you have to choose category like 'now_playing', 'popular', and then add your api key
     let linkToGetJSONData = "https://api.themoviedb.org/3/movie/"
+    let linkToFindMovieByName = "https://api.themoviedb.org/3/search/movie?"
+    let linkToFindMovieByID = "https://api.themoviedb.org/3/movie/"
 }

@@ -10,6 +10,8 @@ import Alamofire
 
 class RecommendedTableCell: UITableViewCell {
     var recommendedMovies = [HomeModel]()
+    let detailPresenter = DetailPresenter()
+    weak var parentViewController: HomeViewController?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -34,8 +36,14 @@ class RecommendedTableCell: UITableViewCell {
         nil
     }
     
+    func configure(recommendedMovies: [HomeModel]){
+        self.recommendedMovies = recommendedMovies
+    }
+    
     private func setupView(){
         selectionStyle = .none
+        detailPresenter.delegate = self
+        self.backgroundColor = .clear
         contentView.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(25)
@@ -46,6 +54,12 @@ class RecommendedTableCell: UITableViewCell {
 }
 
 extension RecommendedTableCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieId = String(recommendedMovies[indexPath.row].id)
+        detailPresenter.fetchMovieByID(movieId: movieId)
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return recommendedMovies.count
     }
@@ -58,5 +72,19 @@ extension RecommendedTableCell: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0.0, left: 35.0, bottom: 0.0, right: 35.0)
+    }
+}
+
+extension RecommendedTableCell: DetailDelegate {
+    func didFetchMovie(movie: DetailModel) {
+        let detailVC = DetailViewController()
+        detailVC.configure(model: movie)
+        if let parentVC = self.parentViewController {
+            parentVC.navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    func didFail(error: Error) {
+        print(error)
     }
 }

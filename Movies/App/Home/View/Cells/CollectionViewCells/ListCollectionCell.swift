@@ -31,6 +31,7 @@ class ListCollectionCell: UICollectionViewCell {
         if let url = URL(string: "\(APIManager.shared.linkToFetchImages)\(urlForImage)"){
             image.kf.setImage(with: url)
         }
+        
     }
     
     private func setupView(){

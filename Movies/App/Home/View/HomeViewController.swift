@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SkeletonView
 
 enum RowsInTableView: CaseIterable{
     case recommended, categories, list
@@ -14,7 +15,6 @@ enum RowsInTableView: CaseIterable{
 
 final class HomeViewController: BaseViewController {
     let rows = RowsInTableView.allCases
-    
     let homePresenterDelegate = HomePresenter()
     var recommendedMovies = [HomeModel]()
     var listTableMovies = [HomeModel]()
@@ -22,12 +22,12 @@ final class HomeViewController: BaseViewController {
     
     private lazy var tableView: UITableView = {
         var tableView = UITableView()
+        tableView.dataSource = self
         tableView.register(RecommendedTableCell.self, forCellReuseIdentifier: "RecommendedTableCell")
         tableView.register(CategoriesTableCell.self, forCellReuseIdentifier: "CategoriesTableCell")
         tableView.register(ListTableCell.self, forCellReuseIdentifier: "ListTableCell")
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.dataSource = self
         return tableView
     }()
     
@@ -38,11 +38,10 @@ final class HomeViewController: BaseViewController {
     
     private func setupViews() {
         view.addSubview(tableView)
-        
         homePresenterDelegate.delegate = self
         homePresenterDelegate.fetchDataFromAPI(category: .popular)
         homePresenterDelegate.receiveDataForListTableCell(category: .nowPlaying)
-        
+        tableView.isUserInteractionEnabled = true
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -77,14 +76,14 @@ extension HomeViewController: UITableViewDataSource {
             case .recommended:
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RecommendedTableCell", for: indexPath) as! RecommendedTableCell
-                cell.backgroundColor = .clear
-                cell.recommendedMovies = self.recommendedMovies
+                cell.configure(recommendedMovies: self.recommendedMovies)
+                cell.parentViewController = self
+    
                 return cell
                 
             case .categories:
                 
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "CategoriesTableCell", for: indexPath) as! CategoriesTableCell
-                cell.backgroundColor = .clear
                 cell.categoryDidSelect = { [weak self] categoryIndex in
                     let index = self?.identifyTheCategoryNumber(categoryIndex)
                     self?.homePresenterDelegate.receiveDataForListTableCell(category: index ?? .popular)
@@ -94,42 +93,32 @@ extension HomeViewController: UITableViewDataSource {
             case .list:
                 
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "ListTableCell", for: indexPath) as! ListTableCell
-                cell.backgroundColor = .clear
-                cell.listTableMovies = self.listTableMovies
+                cell.configure(listOfMovies: listTableMovies)
+                cell.parentViewController = self
                 return cell
             }
         } else {
             let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-            cell.textLabel?.text = "Loading..."
             return cell
         }
     }
 }
 
 extension HomeViewController: HomePresenterDelegate {
-    func handleDataFromAPI(movies: [MovieResponse]) {
-        for movie in movies {
-            self.recommendedMovies.append(HomeModel(id: movie.id, stringImage: movie.poster_path))
-        }
+    func handleDataFromAPI(movies: [HomeModel]) {
+        self.recommendedMovies = movies
         isDataLoaded = true
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
     
     func handleError(error: Error) {
         print(error)
     }
     
-    func didReceivedDataForListTable(movies: [MovieResponse]) {
-        self.listTableMovies.removeAll()
-        for movie in movies {
-            self.listTableMovies.append(HomeModel(id: movie.id, stringImage: movie.poster_path))
-        }
-        isDataLoaded = true
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+    func didReceivedDataForListTable(movies: [HomeModel]) {
+        self.listTableMovies = movies
+        let indexPath = IndexPath(item: 2, section: 0)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
 

@@ -30,6 +30,7 @@ class TabController: UITabBarController {
         }
         UITabBar.appearance().barTintColor = .clear
         tabBar.tintColor = UIColor(hex: "#0296E5")
+        tabBar.backgroundColor = UIColor(hex: "#191919")
         viewControllers = [
             createNavController(for: HomeViewController(), title: NSLocalizedString("Home", comment: ""), image: UIImage(systemName: "house")!),
             createNavController(for: SearchViewController(), title: NSLocalizedString("Search", comment: ""), image: UIImage(systemName: "magnifyingglass")!),

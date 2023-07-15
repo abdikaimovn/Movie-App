@@ -2,31 +2,14 @@ import Foundation
 import Alamofire
 
 protocol HomePresenterDelegate{
-    func handleDataFromAPI(movies: [MovieResponse])
-    func didReceivedDataForListTable(movies: [MovieResponse])
+    func handleDataFromAPI(movies: [HomeModel])
+    func didReceivedDataForListTable(movies: [HomeModel])
     func handleError(error: Error)
-}
-
-struct PopularMovieForRecommendedSection: Codable {
-    let results: [MovieResponse]
-}
-
-enum Categories: String{
-    case nowPlaying = "now_playing"
-    case upcoming = "upcoming"
-    case topRated = "top_rated"
-    case popular = "popular"
-}
-
-struct MovieResponse: Codable {
-    let id: Int
-    let title: String
-    let poster_path: String
 }
 
 class HomePresenter{
     var delegate: HomePresenterDelegate?
-    
+
     func fetchDataFromAPI(category: Categories) {
         var apiUrl: String?
         switch category{
@@ -48,7 +31,11 @@ class HomePresenter{
             switch response.result {
             case .success(let movieResponse):
                 let movies = movieResponse.results
-                self.delegate?.handleDataFromAPI(movies: movies)
+                var listOfMovies = [HomeModel]()
+                for movie in movies{
+                    listOfMovies.append(HomeModel(id: movie.id, stringImage: movie.poster_path))
+                }
+                self.delegate?.handleDataFromAPI(movies: listOfMovies)
             case .failure(let error):
                 self.delegate?.handleError(error: error)
             }
@@ -76,7 +63,11 @@ class HomePresenter{
             switch response.result {
             case .success(let movieResponse):
                 let movies = movieResponse.results
-                self.delegate?.didReceivedDataForListTable(movies: movies)
+                var listOfMoviesForCategories = [HomeModel]()
+                for movie in movies{
+                    listOfMoviesForCategories.append(HomeModel(id: movie.id, stringImage: movie.poster_path))
+                }
+                self.delegate?.didReceivedDataForListTable(movies: listOfMoviesForCategories)
             case .failure(let error):
                 self.delegate?.handleError(error: error)
             }
