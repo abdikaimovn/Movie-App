@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 
+//not implemented class
+
 class WatchListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()

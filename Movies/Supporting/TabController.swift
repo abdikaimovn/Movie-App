@@ -33,8 +33,7 @@ class TabController: UITabBarController {
         tabBar.backgroundColor = UIColor(hex: "#191919")
         viewControllers = [
             createNavController(for: HomeViewController(), title: NSLocalizedString("Home", comment: ""), image: UIImage(systemName: "house")!),
-            createNavController(for: SearchViewController(), title: NSLocalizedString("Search", comment: ""), image: UIImage(systemName: "magnifyingglass")!),
-            createNavController(for: WatchListViewController(), title: NSLocalizedString("Watch list", comment: ""), image: UIImage(systemName: "bookmark")!)
+            createNavController(for: SearchViewController(), title: NSLocalizedString("Search", comment: ""), image: UIImage(systemName: "magnifyingglass")!)
         ]
     }
     

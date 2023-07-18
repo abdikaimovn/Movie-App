@@ -99,6 +99,7 @@ extension HomeViewController: UITableViewDataSource {
             }
         } else {
             let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+            cell.backgroundColor = .clear
             return cell
         }
     }
