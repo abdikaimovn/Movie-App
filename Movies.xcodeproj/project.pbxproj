@@ -158,18 +158,10 @@
 			path = Movies;
 			sourceTree = "<group>";
 		};
-		6FBBABE62A61630500A092C9 /* SkeletonShimmer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SkeletonShimmer;
-			sourceTree = "<group>";
-		};
 		6FCCE1222A573ABD0038767A /* App */ = {
 			isa = PBXGroup;
 			children = (
 				6F677A212A62EED100CE117A /* Details */,
-				6FBBABE62A61630500A092C9 /* SkeletonShimmer */,
 				6FCCE13D2A57DCF20038767A /* API */,
 				6FCCE1242A573B040038767A /* Home */,
 				6FCCE1292A573BB60038767A /* Search */,
