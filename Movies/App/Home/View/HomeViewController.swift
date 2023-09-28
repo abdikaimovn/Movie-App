@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import SkeletonView
 
 enum RowsInTableView: CaseIterable{
     case recommended, categories, list

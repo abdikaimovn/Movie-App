@@ -12,6 +12,7 @@ class ListTableCell: UITableViewCell {
     var listTableMovies = [HomeModel]()
     var detailPresenter = DetailPresenter()
     weak var parentViewController: HomeViewController?
+    
     private lazy var collectionView: UICollectionView = {
         let layout  = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 144)
