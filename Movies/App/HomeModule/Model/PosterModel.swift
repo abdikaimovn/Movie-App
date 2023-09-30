@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct HomeModel{
+struct PosterModel{
     let id: Int
     let stringImage: String
 }

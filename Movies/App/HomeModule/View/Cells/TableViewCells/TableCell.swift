@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-class ListTableCell: UITableViewCell {
-    var listTableMovies = [HomeModel]()
+class TableCell: UITableViewCell {
+    var tableMovies = [PosterModel]()
     var detailPresenter = DetailPresenter()
     weak var parentViewController: HomeViewController?
     
@@ -23,7 +23,7 @@ class ListTableCell: UITableViewCell {
         cView.delegate = self
         cView.dataSource = self
         cView.isScrollEnabled = false
-        cView.register(ListCollectionCell.self, forCellWithReuseIdentifier: "ListCollectionCell")
+        cView.register(TableCollectionCell.self, forCellWithReuseIdentifier: "ListCollectionCell")
         return cView
     }()
     
@@ -49,30 +49,30 @@ class ListTableCell: UITableViewCell {
         }
     }
     
-    func configure(listOfMovies: [HomeModel]){
-        listTableMovies = listOfMovies
+    func configure(listOfMovies: [PosterModel]){
+        tableMovies = listOfMovies
         collectionView.reloadData()
     }
 }
 
-extension ListTableCell: UICollectionViewDelegate, UICollectionViewDataSource{
+extension TableCell: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movieId = String(listTableMovies[indexPath.row].id)
+        let movieId = String(tableMovies[indexPath.row].id)
         detailPresenter.fetchMovieByID(movieId: movieId)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return listTableMovies.count
+        return tableMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCollectionCell", for: indexPath) as! ListCollectionCell
-        cell.configure(urlForImage: listTableMovies[indexPath.row].stringImage)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCollectionCell", for: indexPath) as! TableCollectionCell
+        cell.configure(urlForImage: tableMovies[indexPath.row].stringImage)
         return cell
     }
 }
 
-extension ListTableCell: DetailDelegate {
+extension TableCell: DetailDelegate {
     func didFetchMovie(movie: DetailModel) {
         let detailVC = DetailViewController()
         detailVC.configure(model: movie)

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class ListCollectionCell: UICollectionViewCell {
+class TableCollectionCell: UICollectionViewCell {
     private let image: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "movie")
@@ -31,7 +31,6 @@ class ListCollectionCell: UICollectionViewCell {
         if let url = URL(string: "\(APIManager.shared.linkToFetchImages)\(urlForImage)"){
             image.kf.setImage(with: url)
         }
-        
     }
     
     private func setupView(){

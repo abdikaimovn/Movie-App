@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class SearchVCsTableCell: UITableViewCell {
+class SearchTableCell: UITableViewCell {
     private var image: UIImageView = {
         var image = UIImageView()
         image.layer.cornerRadius = 16

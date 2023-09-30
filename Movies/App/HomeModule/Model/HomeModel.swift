@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct PopularMovieForRecommendedSection: Codable {
+struct HomeModel: Codable {
     let results: [MovieResponse]
+}
+
+struct MovieResponse: Codable {
+    let id: Int
+    let title: String
+    let poster_path: String
 }
 
 enum Categories: String{
@@ -18,8 +24,3 @@ enum Categories: String{
     case popular = "popular"
 }
 
-struct MovieResponse: Codable {
-    let id: Int
-    let title: String
-    let poster_path: String
-}

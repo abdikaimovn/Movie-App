@@ -28,7 +28,6 @@ struct Movie: Decodable {
     }
 }
 
-
 protocol TransferOfFoundMovies {
     func didRetrievedMovies(movies: [SearchingMovieModel])
     func didFailure(error: Error)

@@ -30,7 +30,7 @@ class SearchViewController: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.isHidden = false
-        tableView.register(SearchVCsTableCell.self, forCellReuseIdentifier: "SearchVCsTableCell")
+        tableView.register(SearchTableCell.self, forCellReuseIdentifier: "SearchTableCell")
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -136,7 +136,7 @@ extension SearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchVCsTableCell") as! SearchVCsTableCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTableCell") as! SearchTableCell
         cell.configure(movie: listOfFoundMovies[indexPath.row])
         return cell
     }

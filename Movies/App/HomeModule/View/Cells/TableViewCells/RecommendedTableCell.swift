@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 
 class RecommendedTableCell: UITableViewCell {
-    var recommendedMovies = [HomeModel]()
+    var recommendedMovies: [PosterModel]!
     let detailPresenter = DetailPresenter()
     weak var parentViewController: HomeViewController?
     
@@ -23,7 +23,7 @@ class RecommendedTableCell: UITableViewCell {
         cView.backgroundColor = .clear
         cView.dataSource = self
         cView.showsHorizontalScrollIndicator = false
-        cView.register(ListCollectionCell.self, forCellWithReuseIdentifier: "ListCollectionCell")
+        cView.register(TableCollectionCell.self, forCellWithReuseIdentifier: "ListCollectionCell")
         return cView
     }()
     
@@ -36,7 +36,7 @@ class RecommendedTableCell: UITableViewCell {
         nil
     }
     
-    func configure(recommendedMovies: [HomeModel]){
+    func configure(recommendedMovies: [PosterModel]){
         self.recommendedMovies = recommendedMovies
     }
     
@@ -59,13 +59,12 @@ extension RecommendedTableCell: UICollectionViewDelegate, UICollectionViewDataSo
         detailPresenter.fetchMovieByID(movieId: movieId)
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return recommendedMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCollectionCell", for: indexPath) as! ListCollectionCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCollectionCell", for: indexPath) as! TableCollectionCell
         cell.configure(urlForImage: self.recommendedMovies[indexPath.row].stringImage)
         return cell
     }

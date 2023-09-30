@@ -31,7 +31,7 @@ class DetailPresenter{
     var delegate: DetailDelegate?
     
     func fetchMovieByID(movieId: String){
-        let apiUrl = "\(APIManager.shared.linkToFindMovieByID)\(movieId)?api_key=\(APIManager.shared.apiKey)"
+        let apiUrl = "\(APIManager.shared.linkToGetJSONData)\(movieId)?api_key=\(APIManager.shared.apiKey)"
         
         let parameters: Parameters = [
             "api_key": "3052a38221f4fa7f31b8d86590794875"

@@ -72,9 +72,9 @@ extension CategoriesTableCell: UICollectionViewDelegate, UICollectionViewDataSou
         selectedCategoryIndex = indexPath.row
         collectionView.reloadItems(at: indexes)
         collectionView.scrollToItem(at: indexes[1], at: .centeredHorizontally, animated: true)
+        // Transfer selected index to parentViewController though the callback function
         categoryDidSelect?(selectedCategoryIndex)
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionCell", for: indexPath) as! CategoriesCollectionCell
