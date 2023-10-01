@@ -13,3 +13,17 @@ struct DetailModel{
     let backDropPath: String?
     let overview: String
 }
+
+struct MovieDetail: Decodable{
+    let backdropPath: String?
+    let posterPath: String?
+    let name: String
+    let overview: String
+    
+    enum CodingKeys: String, CodingKey {
+        case backdropPath = "backdrop_path"
+        case posterPath = "poster_path"
+        case name = "title"
+        case overview
+    }
+}

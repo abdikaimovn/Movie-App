@@ -185,8 +185,8 @@
 		6FCCE1222A573ABD0038767A /* App */ = {
 			isa = PBXGroup;
 			children = (
-				6F677A212A62EED100CE117A /* DetailsModule */,
 				6FCCE13D2A57DCF20038767A /* API */,
+				6F677A212A62EED100CE117A /* DetailsModule */,
 				6FCCE1242A573B040038767A /* HomeModule */,
 				6FCCE1292A573BB60038767A /* SearchModule */,
 				6FCCE12A2A573BC00038767A /* WatchModule */,
