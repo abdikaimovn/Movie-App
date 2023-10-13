@@ -18,7 +18,7 @@ struct Movie: Decodable {
     let releaseDate: String
     let posterPath: String?
     let voteAverage: Double
-
+    
     enum CodingKeys: String, CodingKey {
         case id
         case title
@@ -35,6 +35,7 @@ protocol TransferOfFoundMovies {
 
 final class SearchPresenter {
     var transferDataDelegate: TransferOfFoundMovies?
+    var defaultQueue = DispatchQueue.global(qos: .default)
     
     func removeWhiteSpaces(string: String) -> String{
         var newString = ""
@@ -54,22 +55,29 @@ final class SearchPresenter {
             "api_key": "3052a38221f4fa7f31b8d86590794875"
         ]
         
-        AF.request(apiURL, parameters: parameters).responseDecodable(of: Movies.self) { response in
-            switch response.result{
-            case .success(let movieResponse):
-                let movies = movieResponse.results
-                var listOfFoundMovies = [SearchingMovieModel]()
-                for movie in movies{
-                    listOfFoundMovies.append(SearchingMovieModel(id: movie.id,
-                                                                 title: movie.title,
-                                                                 posterPath: movie.posterPath ?? "zQ8AxTPiCiS5nnwXpwTBPBHSaa5.jpg",
-                                                                 voteAverage: Float(movie.voteAverage),
-                                                                 releaseDate: movie.releaseDate))
+        defaultQueue.async {
+            AF.request(apiURL, parameters: parameters).responseDecodable(of: Movies.self) { response in
+                switch response.result{
+                case .success(let movieResponse):
+                    let movies = movieResponse.results
+                    var listOfFoundMovies = [SearchingMovieModel]()
+                    for movie in movies{
+                        listOfFoundMovies.append(SearchingMovieModel(id: movie.id,
+                                                                     title: movie.title,
+                                                                     posterPath: movie.posterPath ?? "zQ8AxTPiCiS5nnwXpwTBPBHSaa5.jpg",
+                                                                     voteAverage: Float(movie.voteAverage),
+                                                                     releaseDate: movie.releaseDate))
+                    }
+                    DispatchQueue.main.async {
+                        self.transferDataDelegate?.didRetrievedMovies(movies: listOfFoundMovies)
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.transferDataDelegate?.didFailure(error: error)
+                    }
                 }
-                self.transferDataDelegate?.didRetrievedMovies(movies: listOfFoundMovies)
-            case .failure(let error):
-                self.transferDataDelegate?.didFailure(error: error)
             }
+
         }
     }
 }
