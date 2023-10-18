@@ -10,7 +10,9 @@ import Foundation
 struct SearchingMovieModel{
     var id: Int
     var title: String
+    var genre: String
     var posterPath: String
     var voteAverage: Float
+    var runtime: Int
     var releaseDate: String
 }

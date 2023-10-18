@@ -38,7 +38,6 @@ class SearchViewController: BaseViewController {
     
     private lazy var errorMessageView: UIView = {
         var view = UIView()
-        
         return view
     }()
     
@@ -157,7 +156,7 @@ extension SearchViewController: TransferOfFoundMovies {
 
 extension SearchViewController: UITextFieldDelegate{
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        delegate.fetchInfoAboutMovie(movieTitle: textField.text ?? "Spiderman")
+        delegate.fetchInfoAboutMovie(movieTitle: textField.text ?? "")
         if listOfFoundMovies.count > 0 {
             errorMessageView.isHidden = true
             tableView.isHidden = false
