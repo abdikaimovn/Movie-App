@@ -121,6 +121,9 @@ extension SearchViewController: DetailDelegate {
     func didFetchMovie(movie: DetailModel) {
         let detailVC = DetailViewController()
         detailVC.configure(model: movie)
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        backBarButtonItem.tintColor = .white
+        self.navigationItem.backBarButtonItem = backBarButtonItem
         self.navigationController?.pushViewController(detailVC.self, animated: true)
     }
     

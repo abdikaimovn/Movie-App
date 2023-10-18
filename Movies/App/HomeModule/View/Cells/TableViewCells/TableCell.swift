@@ -77,6 +77,9 @@ extension TableCell: DetailDelegate {
         let detailVC = DetailViewController()
         detailVC.configure(model: movie)
         if let parentVC = self.parentViewController {
+            let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            backBarButtonItem.tintColor = .white
+            parentVC.navigationItem.backBarButtonItem = backBarButtonItem
             parentVC.navigationController?.pushViewController(detailVC, animated: true)
         }
     }
