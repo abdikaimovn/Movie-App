@@ -13,9 +13,15 @@ protocol DetailDelegate{
     func didFail(error: Error)
 }
 
+protocol DetailVCDelegate: AnyObject {
+    func didMarkMovie(movieID: Int)
+    func didUnmarkMovie(movieID: Int)
+}
+
 class DetailPresenter{
     var delegate: DetailDelegate?
     var defaultQueue = DispatchQueue.global(qos: .default)
+    var detailVC: DetailViewController?
     
     func fetchMovieByID(movieId: String){
         let apiUrl = "\(APIManager.shared.linkToGetJSONData)\(movieId)?api_key=\(APIManager.shared.apiKey)"
@@ -45,5 +51,15 @@ class DetailPresenter{
                 }
             }
         }
+    }
+}
+
+extension DetailPresenter: DetailVCDelegate {
+    func didMarkMovie(movieID: Int) {
+        BookmarkManager.shared.addMovieID(movieID)
+    }
+    
+    func didUnmarkMovie(movieID: Int) {
+        BookmarkManager.shared.removeMovieID(movieID)
     }
 }

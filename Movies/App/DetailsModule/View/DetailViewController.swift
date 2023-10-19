@@ -10,6 +10,20 @@ import SnapKit
 import Kingfisher
 
 class DetailViewController: UIViewController {
+    var delegate: DetailPresenter?
+    private var movieID: Int?
+    private var markButton: UIBarButtonItem!
+    private var isMarked = false
+    
+    init(movieID: Int) {
+        self.movieID = movieID
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var backdropImage: UIImageView = {
         var image = UIImageView()
         image.layer.cornerRadius = 20
@@ -61,9 +75,12 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Details"
+        let presenter = DetailPresenter()
+        delegate = presenter
+        delegate?.detailVC = self
         setupViews()
     }
-
+    
     func configure(model: DetailModel){
         if let safeBackImage = model.backDropPath {
             if let url = URL(string: "\(APIManager.shared.linkToFetchImages)\(safeBackImage)"){
@@ -83,10 +100,42 @@ class DetailViewController: UIViewController {
         
         movieTitle.text = model.title
         movieDescription.text = model.overview
+        
+    }
+    
+    @objc func markPressed() {
+        isMarked.toggle()
+        
+        if isMarked {
+            markButton.image = UIImage(systemName: "bookmark.fill")
+            self.delegate?.didMarkMovie(movieID: movieID!)
+        }else {
+            markButton.image = UIImage(systemName: "bookmark")
+            self.delegate?.didUnmarkMovie(movieID: movieID!)
+        }
+    }
+    
+    func isBookMarked(movieID: Int) -> String{
+        if BookmarkManager.shared.isMovieBookmarked(movieID) {
+            isMarked = true
+            return "bookmark.fill"
+        }else{
+            isMarked = false
+            return "bookmark"
+        }
     }
     
     private func setupViews(){
         view.backgroundColor = UIColor(hex: "#242A32")
+        
+        let buttonView = UIView()
+        buttonView.backgroundColor = UIColor.red
+        buttonView.layer.cornerRadius = 8
+        
+        markButton = UIBarButtonItem(image: UIImage(systemName: isBookMarked(movieID: movieID!)), style: .plain, target: self, action: #selector(markPressed))
+        markButton.tintColor = .white
+        
+        self.navigationItem.rightBarButtonItem = markButton
         
         view.addSubview(backdropImage)
         backdropImage.snp.makeConstraints { make in
@@ -130,5 +179,5 @@ class DetailViewController: UIViewController {
         }
         
     }
-
+    
 }

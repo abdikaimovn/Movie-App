@@ -12,6 +12,7 @@ class RecommendedTableCell: UITableViewCell {
     var recommendedMovies: [PosterModel]!
     let detailPresenter = DetailPresenter()
     weak var parentViewController: HomeViewController?
+    private var movieID: Int?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -57,6 +58,7 @@ extension RecommendedTableCell: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movieId = String(recommendedMovies[indexPath.row].id)
         detailPresenter.fetchMovieByID(movieId: movieId)
+        self.movieID = recommendedMovies[indexPath.row].id
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -76,7 +78,7 @@ extension RecommendedTableCell: UICollectionViewDelegate, UICollectionViewDataSo
 
 extension RecommendedTableCell: DetailDelegate {
     func didFetchMovie(movie: DetailModel) {
-        let detailVC = DetailViewController()
+        let detailVC = DetailViewController(movieID: self.movieID!)
         detailVC.configure(model: movie)
         if let parentVC = self.parentViewController {
             let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)

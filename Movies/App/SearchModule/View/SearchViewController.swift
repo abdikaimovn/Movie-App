@@ -14,6 +14,7 @@ class SearchViewController: BaseViewController {
     var valueOfTextField: String?
     var detailPresenter = DetailPresenter()
     var movieModel: DetailModel?
+    private var movieID: Int?
     
     private var textField: UITextField = {
         var textField = UITextField()
@@ -114,12 +115,13 @@ class SearchViewController: BaseViewController {
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         detailPresenter.fetchMovieByID(movieId: String(listOfFoundMovies[indexPath.row].id))
+        self.movieID = listOfFoundMovies[indexPath.row].id
     }
 }
 
 extension SearchViewController: DetailDelegate {
     func didFetchMovie(movie: DetailModel) {
-        let detailVC = DetailViewController()
+        let detailVC = DetailViewController(movieID: self.movieID!)
         detailVC.configure(model: movie)
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         backBarButtonItem.tintColor = .white

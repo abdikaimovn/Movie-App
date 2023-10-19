@@ -12,6 +12,7 @@ class TableCell: UITableViewCell {
     var tableMovies = [PosterModel]()
     var detailPresenter = DetailPresenter()
     weak var parentViewController: HomeViewController?
+    private var movieID: Int?
     
     private lazy var collectionView: UICollectionView = {
         let layout  = UICollectionViewFlowLayout()
@@ -59,6 +60,7 @@ extension TableCell: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movieId = String(tableMovies[indexPath.row].id)
         detailPresenter.fetchMovieByID(movieId: movieId)
+        self.movieID = tableMovies[indexPath.row].id
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -74,7 +76,7 @@ extension TableCell: UICollectionViewDelegate, UICollectionViewDataSource{
 
 extension TableCell: DetailDelegate {
     func didFetchMovie(movie: DetailModel) {
-        let detailVC = DetailViewController()
+        let detailVC = DetailViewController(movieID: self.movieID!)
         detailVC.configure(model: movie)
         if let parentVC = self.parentViewController {
             let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
