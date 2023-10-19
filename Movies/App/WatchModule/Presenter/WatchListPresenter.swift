@@ -13,16 +13,19 @@ class WatchListPresenter {
     var defaultQueue = DispatchQueue.global(qos: .default)
     var movieIDs: [Int]!
     
-    // Helper method to replace spaces with underscores in a string
-    func removeWhiteSpaces(string: String) -> String {
-        return string.replacingOccurrences(of: " ", with: "_")
-    }
-    
     func fetchMovieDetails() {
         var listOfFoundMovies = [SearchingMovieModel]()
         
+        let group = DispatchGroup() // Create a dispatch group
+        
         for movieID in self.movieIDs {
+            group.enter() // Enter the group for each request
+            
             AF.request("\(APIManager.shared.linkToGetJSONData)\(movieID)?api_key=\(APIManager.shared.apiKey)").responseDecodable(of: Movie.self) { response in
+                defer {
+                    group.leave() // Leave the group when the request is completed (success or failure)
+                }
+                
                 switch response.result {
                 case .success(let movie):
                     listOfFoundMovies.append(SearchingMovieModel(id: movie.id,
@@ -40,9 +43,11 @@ class WatchListPresenter {
             }
         }
         
-        DispatchQueue.main.async {
+        group.notify(queue: DispatchQueue.main) {
+            // This block is executed when all requests have completed
             self.transferDataDelegate?.didRetrievedMovies(movies: listOfFoundMovies)
         }
     }
+
 }
 

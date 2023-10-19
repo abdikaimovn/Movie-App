@@ -93,13 +93,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		6F311F092AC587E100151AD8 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		6F311F0A2AC587FE00151AD8 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,7 +250,6 @@
 		6FCCE12A2A573BC00038767A /* WatchModule */ = {
 			isa = PBXGroup;
 			children = (
-				6F311F092AC587E100151AD8 /* Model */,
 				6FCCE1322A573C2D0038767A /* View */,
 				6F311F0A2AC587FE00151AD8 /* Presenter */,
 			);

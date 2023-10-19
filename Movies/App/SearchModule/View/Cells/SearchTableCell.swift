@@ -96,7 +96,7 @@ class SearchTableCell: UITableViewCell {
                                                                   symbolName: "calendar",
                                                                   symbolColor: nil)
         movieGenreLabel.attributedText = addSfSymbolToLabel(labelText: movie.genre, symbolName: "ticket", symbolColor: nil)
-        movieDurationLabel.attributedText = addSfSymbolToLabel(labelText: String(movie.runtime), symbolName: "clock", symbolColor: nil)
+        movieDurationLabel.attributedText = addSfSymbolToLabel(labelText: String(movie.runtime) + " minutes", symbolName: "clock", symbolColor: nil)
         
     }
     
