@@ -15,6 +15,8 @@ final class WatchListViewController: BaseViewController {
     var movies = [SearchingMovieModel]()
     var delegate = WatchListPresenter()
     var detailMovie: DetailModel?
+    
+    
     lazy private var tableView: UITableView = {
         var tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -55,6 +57,7 @@ final class WatchListViewController: BaseViewController {
     
     @objc func refreshData() {
         // You can put your data fetching logic here
+        markedMoviesIDs = BookmarkManager.shared.getBookmarkedMovieIDs()
         delegate.fetchMovieDetails()
     }
 
@@ -63,23 +66,23 @@ final class WatchListViewController: BaseViewController {
 
 extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    //MARK: - NEED TO FIX
-//        let movieID = movies[indexPath.row].id
-//
-//        let detailVC = DetailViewController(movieID: movieID)
-//        detailVC.delegate?.fetchMovieByID(movieId: String(movieID))
-//
-//        DispatchQueue.main.async {
-//            detailVC.configure(model: self.detailMovie!)
-//        }
-//
-//        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-//        backBarButtonItem.tintColor = .white
-//        self.navigationItem.backBarButtonItem = backBarButtonItem
-//        self.navigationController?.pushViewController(detailVC, animated: true)
+        let movieID = movies[indexPath.row].id
+
+        // Create an instance of DetailPresenter
+        let detailPresenter = DetailPresenter()
+        detailPresenter.delegate = self
+
+        // Assign detailPresenter as the delegate to detailVC
+        let detailVC = DetailViewController(movieID: movieID)
+        detailVC.delegate = detailPresenter
+        detailVC.delegate?.fetchMovieByID(movieId: String(movieID))
+
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        backBarButtonItem.tintColor = .white
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTableCell") as! SearchTableCell
         cell.configure(movie: movies[indexPath.row])
@@ -106,15 +109,20 @@ extension WatchListViewController: TransferOfFoundMovies {
         print(error)
     }
 }
-//
-//extension WatchListViewController: DetailDelegate {
-//    func didFetchMovie(movie: DetailModel) {
-//        DispatchQueue.main.async {
-//            self.detailMovie = movie
-//        }
-//    }
-//
-//    func didFail(error: Error) {
-//        print(error)
-//    }
-//}
+
+extension WatchListViewController: DetailDelegate {
+    func didFetchMovie(movie: DetailModel) {
+        DispatchQueue.main.async {
+            self.detailMovie = movie
+            // Update the detail view controller if it's currently visible
+            if let detailViewController = self.navigationController?.topViewController as? DetailViewController {
+                detailViewController.configure(model: movie)
+            }
+        }
+    }
+
+    func didFail(error: Error) {
+        print(error)
+    }
+}
+

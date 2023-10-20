@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-protocol DetailDelegate{
+protocol DetailDelegate: AnyObject{
     func didFetchMovie(movie: DetailModel)
     func didFail(error: Error)
 }
