@@ -33,6 +33,13 @@ class DetailViewController: UIViewController {
         return image
     }()
     
+    private var movieInfoLabel: UILabel = {
+        var movieInfo = UILabel()
+        movieInfo.font = .systemFont(ofSize: 15)
+        movieInfo.textColor = .gray
+        return movieInfo
+    }()
+    
     private var posterImage: UIImageView = {
         var image = UIImageView()
         image.layer.cornerRadius = 15
@@ -104,6 +111,7 @@ class DetailViewController: UIViewController {
         
         movieTitle.text = model.title
         movieDescription.text = model.overview
+        movieInfoLabel.text = "\(model.releaseDate) | \(model.genre) | \(model.runtime) minutes"
     }
     
     @objc func markPressed() {
@@ -162,10 +170,16 @@ class DetailViewController: UIViewController {
             make.top.equalTo(backdropImage.snp.bottom).offset(10)
         }
         
+        view.addSubview(movieInfoLabel)
+        movieInfoLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(posterImage.snp.bottom).offset(20)
+        }
+        
         view.addSubview(aboutMovie)
         aboutMovie.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(30)
-            make.top.equalTo(posterImage.snp.bottom).offset(30)
+            make.top.equalTo(movieInfoLabel.snp.bottom).offset(30)
         }
         
         aboutMovie.addSubview(bottomLine)

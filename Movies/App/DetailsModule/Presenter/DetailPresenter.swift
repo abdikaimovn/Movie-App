@@ -39,8 +39,12 @@ class DetailPresenter{
                         title: movie.name,
                         posterPath: movie.posterPath ?? nil,
                         backDropPath: movie.backdropPath ?? nil,
-                        overview: movie.overview
+                        overview: movie.overview,
+                        runtime: String(movie.runtime ?? 0) ,
+                        genre: movie.genres?.first?.name ?? "not given",
+                        releaseDate: movie.releaseDate
                     )
+                    
                     DispatchQueue.main.async {
                         self.delegate?.didFetchMovie(movie: movieResponse)
                     }

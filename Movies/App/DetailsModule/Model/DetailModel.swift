@@ -12,6 +12,9 @@ struct DetailModel{
     let posterPath: String?
     let backDropPath: String?
     let overview: String
+    let runtime: String
+    let genre: String
+    let releaseDate: String
 }
 
 struct MovieDetail: Decodable{
@@ -19,11 +22,21 @@ struct MovieDetail: Decodable{
     let posterPath: String?
     let name: String
     let overview: String
+    var runtime: Int?
+    var releaseDate: String
+    var genres: [Genre]?
     
     enum CodingKeys: String, CodingKey {
         case backdropPath = "backdrop_path"
         case posterPath = "poster_path"
         case name = "title"
         case overview
+        case runtime
+        case releaseDate = "release_date"
+        case genres
+    }
+    
+    struct Genre: Decodable {
+        var name: String
     }
 }
