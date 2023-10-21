@@ -17,12 +17,20 @@ class SearchViewController: BaseViewController {
     private var movieID: Int?
     
     private var textField: UITextField = {
-        var textField = UITextField()
+        let textField = UITextField()
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
         textField.textColor = .black
         textField.placeholder = "Name of the movie..."
+
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+        ]
+
+        let attributedPlaceholder = NSAttributedString(string: "Name of the movie...", attributes: placeholderAttributes)
+        
+        textField.attributedPlaceholder = attributedPlaceholder
         return textField
     }()
     

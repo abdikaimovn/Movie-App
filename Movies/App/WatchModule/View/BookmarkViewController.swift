@@ -94,7 +94,7 @@ extension BookmarkViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension BookmarkViewController: TransferOfFoundMovies {
     func didRetrievedMovies(movies: [SearchingMovieModel]) {
-        self.movies = movies
+        self.movies = movies.reversed()
         tableView.reloadData()
         
         // End the refreshing
