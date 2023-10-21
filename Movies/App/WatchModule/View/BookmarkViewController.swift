@@ -10,12 +10,11 @@ import SnapKit
 
 //not implemented class
 
-final class WatchListViewController: BaseViewController {
+final class BookmarkViewController: BaseViewController {
     var markedMoviesIDs = BookmarkManager.shared.getBookmarkedMovieIDs()
     var movies = [SearchingMovieModel]()
-    var delegate = WatchListPresenter()
+    var delegate = BookmarkPresenter()
     var detailMovie: DetailModel?
-    
     
     lazy private var tableView: UITableView = {
         var tableView = UITableView()
@@ -57,14 +56,12 @@ final class WatchListViewController: BaseViewController {
     
     @objc func refreshData() {
         // You can put your data fetching logic here
-        markedMoviesIDs = BookmarkManager.shared.getBookmarkedMovieIDs()
+        delegate.movieIDs = BookmarkManager.shared.getBookmarkedMovieIDs()
         delegate.fetchMovieDetails()
     }
-
-
 }
 
-extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
+extension BookmarkViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movieID = movies[indexPath.row].id
 
@@ -95,7 +92,7 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension WatchListViewController: TransferOfFoundMovies {
+extension BookmarkViewController: TransferOfFoundMovies {
     func didRetrievedMovies(movies: [SearchingMovieModel]) {
         self.movies = movies
         tableView.reloadData()
@@ -110,7 +107,7 @@ extension WatchListViewController: TransferOfFoundMovies {
     }
 }
 
-extension WatchListViewController: DetailDelegate {
+extension BookmarkViewController: DetailDelegate {
     func didFetchMovie(movie: DetailModel) {
         DispatchQueue.main.async {
             self.detailMovie = movie
@@ -125,4 +122,3 @@ extension WatchListViewController: DetailDelegate {
         print(error)
     }
 }
-

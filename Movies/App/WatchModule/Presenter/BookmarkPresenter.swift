@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class WatchListPresenter {
+class BookmarkPresenter {
     var transferDataDelegate: TransferOfFoundMovies?
     var defaultQueue = DispatchQueue.global(qos: .default)
     var movieIDs: [Int]!

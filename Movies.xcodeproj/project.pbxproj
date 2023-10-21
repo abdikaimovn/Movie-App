@@ -33,10 +33,10 @@
 		6FCCE13A2A57DB5C0038767A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6FCCE1392A57DB5C0038767A /* Kingfisher */; };
 		6FCCE13C2A57DBC10038767A /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCCE13B2A57DBC10038767A /* APIManager.swift */; };
 		6FDF54E72A4CA77500EA19FC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF54E62A4CA77500EA19FC /* SearchViewController.swift */; };
-		6FDF54E92A4CA78E00EA19FC /* WatchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF54E82A4CA78E00EA19FC /* WatchListViewController.swift */; };
+		6FDF54E92A4CA78E00EA19FC /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF54E82A4CA78E00EA19FC /* BookmarkViewController.swift */; };
 		6FDF54EC2A4CA90100EA19FC /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF54EB2A4CA90100EA19FC /* TabController.swift */; };
 		6FF6405A2AE1566F00376ACD /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF640592AE1566F00376ACD /* Bookmark.swift */; };
-		6FF6405E2AE18FFF00376ACD /* WatchListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF6405D2AE18FFF00376ACD /* WatchListPresenter.swift */; };
+		6FF6405E2AE18FFF00376ACD /* BookmarkPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF6405D2AE18FFF00376ACD /* BookmarkPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,10 +65,10 @@
 		6FCCE1362A57D6F00038767A /* PosterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterModel.swift; sourceTree = "<group>"; };
 		6FCCE13B2A57DBC10038767A /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		6FDF54E62A4CA77500EA19FC /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		6FDF54E82A4CA78E00EA19FC /* WatchListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListViewController.swift; sourceTree = "<group>"; };
+		6FDF54E82A4CA78E00EA19FC /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		6FDF54EB2A4CA90100EA19FC /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
 		6FF640592AE1566F00376ACD /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
-		6FF6405D2AE18FFF00376ACD /* WatchListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListPresenter.swift; sourceTree = "<group>"; };
+		6FF6405D2AE18FFF00376ACD /* BookmarkPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 		6F311F0A2AC587FE00151AD8 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				6FF6405D2AE18FFF00376ACD /* WatchListPresenter.swift */,
+				6FF6405D2AE18FFF00376ACD /* BookmarkPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -284,7 +284,7 @@
 		6FCCE1322A573C2D0038767A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6FDF54E82A4CA78E00EA19FC /* WatchListViewController.swift */,
+				6FDF54E82A4CA78E00EA19FC /* BookmarkViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -411,11 +411,11 @@
 				6FCCE1352A57D6D90038767A /* HomePresenter.swift in Sources */,
 				6FCCE1372A57D6F00038767A /* PosterModel.swift in Sources */,
 				6FF6405A2AE1566F00376ACD /* Bookmark.swift in Sources */,
-				6FDF54E92A4CA78E00EA19FC /* WatchListViewController.swift in Sources */,
+				6FDF54E92A4CA78E00EA19FC /* BookmarkViewController.swift in Sources */,
 				6FCCE13C2A57DBC10038767A /* APIManager.swift in Sources */,
 				6FA3DAF32A4B3B2A0003D2F5 /* SceneDelegate.swift in Sources */,
 				6F00ACAC2A631385003CB02E /* DetailModel.swift in Sources */,
-				6FF6405E2AE18FFF00376ACD /* WatchListPresenter.swift in Sources */,
+				6FF6405E2AE18FFF00376ACD /* BookmarkPresenter.swift in Sources */,
 				6F0F09232A505C4300A08537 /* TableCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

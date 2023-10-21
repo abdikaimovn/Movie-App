@@ -81,6 +81,10 @@ class DetailViewController: UIViewController {
         setupViews()
     }
     
+    deinit{
+        print("DetailViewController deinited")
+    }
+    
     func configure(model: DetailModel){
         if let safeBackImage = model.backDropPath {
             if let url = URL(string: "\(APIManager.shared.linkToFetchImages)\(safeBackImage)"){
@@ -100,7 +104,6 @@ class DetailViewController: UIViewController {
         
         movieTitle.text = model.title
         movieDescription.text = model.overview
-        
     }
     
     @objc func markPressed() {
